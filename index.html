@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gomesh — Software Engineer, Hosur</title>
+<meta name="description" content="Gomesh — software engineer from Hosur. Badminton, series, sports and AI." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏸</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0d10;
+    --bg-soft: #11141a;
+    --ink: #e8eaed;
+    --ink-dim: #9aa0a6;
+    --accent: #ccf24d;
+    --accent-soft: rgba(204, 242, 77, 0.12);
+    --card: rgba(255, 255, 255, 0.04);
+    --card-edge: rgba(255, 255, 255, 0.08);
+    --radius: 18px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.02em; }
+  ::selection { background: var(--accent); color: #0b0d10; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px clamp(20px, 5vw, 64px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: rgba(11, 13, 16, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .nav-logo {
+    font-family: "Space Grotesk", sans-serif; font-weight: 700;
+    font-size: 18px; color: var(--ink); text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--ink-dim); text-decoration: none; font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ---------- hero ---------- */
+  header {
+    position: relative; min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 0 clamp(20px, 8vw, 120px);
+  }
+  #court { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero-inner { position: relative; z-index: 2; pointer-events: none; max-width: 760px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 22px;
+  }
+  .hero-eyebrow::before {
+    content: ""; width: 28px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-size: clamp(44px, 9vw, 96px); font-weight: 700; line-height: 1.02;
+    margin-bottom: 24px;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-rotator { font-size: clamp(17px, 2.2vw, 22px); color: var(--ink-dim); min-height: 1.7em; }
+  .hero-rotator strong {
+    color: var(--ink); font-weight: 500;
+    border-bottom: 2px solid var(--accent);
+  }
+  .rally-chip {
+    position: absolute; top: 92px; right: clamp(20px, 5vw, 64px); z-index: 3;
+    font-family: "Space Grotesk", sans-serif; font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-dim);
+    background: var(--card); border: 1px solid var(--card-edge);
+    border-radius: 100px; padding: 10px 18px;
+    backdrop-filter: blur(8px);
+    user-select: none;
+  }
+  .rally-chip b { color: var(--accent); font-size: 16px; margin-left: 6px; }
+  .hero-hint {
+    position: absolute; bottom: 34px; left: 0; right: 0; z-index: 2;
+    text-align: center; font-size: 13px; color: var(--ink-dim);
+    letter-spacing: 0.06em; pointer-events: none;
+    animation: floaty 2.6s ease-in-out infinite;
+  }
+  @keyframes floaty { 50% { transform: translateY(-6px); } }
+
+  /* ---------- sections ---------- */
+  section { padding: clamp(72px, 12vw, 140px) clamp(20px, 8vw, 120px); max-width: 1180px; margin: 0 auto; }
+  .section-label {
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  h2 { font-size: clamp(30px, 4.4vw, 48px); margin-bottom: 22px; }
+  .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: start; }
+  .about-grid p { color: var(--ink-dim); font-size: 17px; margin-bottom: 16px; }
+  .about-grid p b { color: var(--ink); font-weight: 500; }
+  .fact-list { display: flex; flex-direction: column; gap: 12px; }
+  .fact {
+    display: flex; justify-content: space-between; gap: 16px;
+    padding: 14px 18px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--card-edge);
+    font-size: 14px;
+  }
+  .fact span:first-child { color: var(--ink-dim); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; margin-top: 40px; }
+  .card {
+    position: relative; overflow: hidden;
+    background: var(--card); border: 1px solid var(--card-edge);
+    border-radius: var(--radius); padding: 28px 24px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .card:hover { transform: translateY(-6px); border-color: rgba(204, 242, 77, 0.4); }
+  .card::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--accent-soft), transparent 60%);
+    opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+  }
+  .card:hover::after { opacity: 1; }
+  .card .icon { font-size: 30px; margin-bottom: 16px; display: block; }
+  .card h3 { font-size: 19px; margin-bottom: 8px; }
+  .card p { font-size: 14.5px; color: var(--ink-dim); }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 40px clamp(20px, 8vw, 120px);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+    color: var(--ink-dim); font-size: 13.5px;
+  }
+  footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+  /* ---------- reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 760px) {
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .rally-chip { top: 78px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .hero-hint { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">gomesh<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#offcourt">Off the clock</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header id="hero">
+  <canvas id="court" aria-hidden="true"></canvas>
+  <div class="rally-chip" id="rallyChip">Rally <b id="rallyCount">0</b></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Hosur, India</div>
+    <h1>Gomesh.<br />Engineer by day,<br /><em>smasher</em> by dusk.</h1>
+    <div class="hero-rotator">Currently <strong id="rotator">shipping software</strong></div>
+  </div>
+  <div class="hero-hint" id="heroHint">🏸 a shuttle is falling — swing your cursor to rally</div>
+</header>
+
+<section id="about">
+  <div class="section-label">About</div>
+  <h2 class="reveal">Building things that work,<br />chasing things that fly.</h2>
+  <div class="about-grid">
+    <div class="reveal">
+      <p>I'm a <b>software engineer from Hosur</b> — the quiet hill-edge town between Tamil Nadu and Bengaluru's sprawl. I spend my days building software and my evenings deciding between a badminton court, a new series, and whatever AI rabbit hole the internet has opened this week.</p>
+      <p>I like software the way I like a good rally: <b>fast, deliberate, and no wasted movement</b>. Simple tools, sharp execution, nothing over-engineered.</p>
+    </div>
+    <div class="fact-list reveal">
+      <div class="fact"><span>Base</span><span>Hosur, TN</span></div>
+      <div class="fact"><span>Craft</span><span>Software Engineering</span></div>
+      <div class="fact"><span>Racquet hand</span><span>Always ready</span></div>
+      <div class="fact"><span>Status</span><span>Open to a rally</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="offcourt">
+  <div class="section-label">Off the clock</div>
+  <h2 class="reveal">Four obsessions, zero regrets.</h2>
+  <div class="cards">
+    <div class="card reveal">
+      <span class="icon">🏸</span>
+      <h3>Badminton</h3>
+      <p>The fastest racquet sport on earth, and the only meeting I never reschedule. Smashes over small talk.</p>
+    </div>
+    <div class="card reveal">
+      <span class="icon">📺</span>
+      <h3>Series</h3>
+      <p>"One more episode" is a lifestyle, not a lie. Always taking recommendations, rarely finishing watchlists.</p>
+    </div>
+    <div class="card reveal">
+      <span class="icon">🏆</span>
+      <h3>Sports</h3>
+      <p>If it has a scoreboard, I'm watching it. Match-day adrenaline is the best caffeine substitute ever made.</p>
+    </div>
+    <div class="card reveal">
+      <span class="icon">🤖</span>
+      <h3>AI</h3>
+      <p>Building with it, learning from it, occasionally arguing with it. This page was pair-built with one.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div>© <span id="year"></span> Gomesh · Hosur, India</div>
+  <div>Pair-built with <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> 🏸</div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------- rotating verb ---------- */
+  const phrases = ["shipping software", "smashing shuttles", "bingeing a series", "tracking live scores", "tinkering with AI"];
+  const rotator = document.getElementById("rotator");
+  let pi = 0;
+  setInterval(() => {
+    pi = (pi + 1) % phrases.length;
+    rotator.style.opacity = 0;
+    setTimeout(() => { rotator.textContent = phrases[pi]; rotator.style.opacity = 1; }, 250);
+  }, 2600);
+  rotator.style.transition = "opacity 0.25s ease";
+
+  /* ---------- scroll reveal ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  /* ---------- card spotlight ---------- */
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      card.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
+
+  /* ---------- shuttle rally ---------- */
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canvas = document.getElementById("court");
+  const hero = document.getElementById("hero");
+  const rallyEl = document.getElementById("rallyCount");
+  const chip = document.getElementById("rallyChip");
+  const hint = document.getElementById("heroHint");
+  const ctx = canvas.getContext("2d");
+
+  let W = 0, H = 0, DPR = 1;
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  if (reduceMotion) { hint.textContent = "🏸 Hosur · code · rallies"; return; }
+
+  const GRAVITY = 0.22;
+  const DRAG = 0.992;        // shuttles brake hard in air
+  const HIT_RADIUS = 78;
+  const HIT_COOLDOWN_MS = 280;
+
+  const shuttle = { x: 0, y: 0, vx: 0, vy: 0, spin: 0 };
+  const trail = [];
+  let rally = 0, best = 0, lastHit = 0, hasRallied = false;
+
+  function serve() {
+    shuttle.x = W * (0.25 + Math.random() * 0.5);
+    shuttle.y = -40;
+    shuttle.vx = (Math.random() - 0.5) * 3;
+    shuttle.vy = 1.5;
+    trail.length = 0;
+  }
+  serve();
+
+  const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, lastT: 0 };
+  function trackPointer(cx, cy) {
+    const now = performance.now();
+    const dt = Math.max(now - mouse.lastT, 8);
+    const r = hero.getBoundingClientRect();
+    const nx = cx - r.left, ny = cy - r.top;
+    mouse.vx = ((nx - mouse.x) / dt) * 16;
+    mouse.vy = ((ny - mouse.y) / dt) * 16;
+    mouse.x = nx; mouse.y = ny; mouse.lastT = now;
+  }
+  window.addEventListener("pointermove", (e) => trackPointer(e.clientX, e.clientY), { passive: true });
+  window.addEventListener("touchmove", (e) => {
+    if (e.touches[0]) trackPointer(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+
+  function maybeHit() {
+    const now = performance.now();
+    if (now - lastHit < HIT_COOLDOWN_MS) return;
+    const dx = shuttle.x - mouse.x, dy = shuttle.y - mouse.y;
+    if (dx * dx + dy * dy > HIT_RADIUS * HIT_RADIUS) return;
+    const speed = Math.hypot(mouse.vx, mouse.vy);
+    if (speed < 3) return;
+
+    // impulse from racquet (cursor) swing — always lifts the shuttle
+    shuttle.vx = Math.max(-13, Math.min(13, mouse.vx * 0.55 + dx * 0.06));
+    shuttle.vy = Math.min(-7, mouse.vy * 0.45 - speed * 0.35);
+    shuttle.spin = (Math.random() - 0.5) * 0.4;
+    lastHit = now;
+    rally += 1;
+    best = Math.max(best, rally);
+    hasRallied = true;
+    rallyEl.textContent = rally;
+    chip.style.borderColor = "rgba(204, 242, 77, 0.6)";
+    setTimeout(() => { chip.style.borderColor = ""; }, 200);
+    if (hint.style.opacity !== "0") { hint.style.transition = "opacity 0.6s"; hint.style.opacity = "0"; }
+  }
+
+  function drawShuttle() {
+    const angle = Math.atan2(shuttle.vy, shuttle.vx);
+    ctx.save();
+    ctx.translate(shuttle.x, shuttle.y);
+    ctx.rotate(angle + Math.PI / 2 + shuttle.spin);
+
+    // feather skirt
+    ctx.beginPath();
+    ctx.moveTo(0, 6);
+    ctx.lineTo(-11, -22);
+    ctx.lineTo(11, -22);
+    ctx.closePath();
+    ctx.fillStyle = "rgba(232, 234, 237, 0.85)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(154, 160, 166, 0.8)";
+    ctx.lineWidth = 1;
+    for (let i = -1; i <= 1; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0, 4);
+      ctx.lineTo(i * 7, -21);
+      ctx.stroke();
+    }
+    // skirt rim
+    ctx.beginPath();
+    ctx.moveTo(-11, -22);
+    ctx.lineTo(11, -22);
+    ctx.stroke();
+    // cork
+    ctx.beginPath();
+    ctx.arc(0, 9, 6.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#ccf24d";
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+
+    // faint court line
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, H * 0.86);
+    ctx.lineTo(W, H * 0.86);
+    ctx.stroke();
+
+    shuttle.vy += GRAVITY;
+    shuttle.vx *= DRAG;
+    shuttle.vy *= DRAG;
+    shuttle.x += shuttle.vx;
+    shuttle.y += shuttle.vy;
+
+    // side walls bounce softly
+    if (shuttle.x < 14 && shuttle.vx < 0) shuttle.vx *= -0.7;
+    if (shuttle.x > W - 14 && shuttle.vx > 0) shuttle.vx *= -0.7;
+
+    maybeHit();
+
+    // floor: rally over
+    if (shuttle.y > H + 60) {
+      if (hasRallied && rally > 0) {
+        rally = 0;
+        rallyEl.textContent = "0";
+      }
+      serve();
+    }
+
+    trail.push({ x: shuttle.x, y: shuttle.y });
+    if (trail.length > 14) trail.shift();
+    for (let i = 0; i < trail.length; i++) {
+      const a = (i / trail.length) * 0.25;
+      ctx.beginPath();
+      ctx.arc(trail[i].x, trail[i].y, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(204, 242, 77, " + a + ")";
+      ctx.fill();
+    }
+
+    drawShuttle();
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
